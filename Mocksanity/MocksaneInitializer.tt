@@ -1,0 +1,113 @@
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Text" #>
+
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using BindingFlags = System.Reflection.BindingFlags;
+
+namespace RealGoodApps.Mocksanity
+{
+    public static class MocksaneInitializer
+    {
+        public static BaseMocksaneVoid<TInstance> Initialize<TInstance>(
+            TInstance instance,
+            Expression<Action<TInstance>> expression,
+            Action<MocksaneParameters> callbackFunction = null,
+            Func<MocksaneParameters, bool> predicateFunction = null)
+            where TInstance : class
+        {
+            var evaluation = MocksaneExpression.Evaluate(expression);
+
+            BaseMocksaneVoid<TInstance> mocksane;
+
+            switch (evaluation.ParameterCount)
+            {
+                case 0:
+                    mocksane = new MocksaneVoid<TInstance>(instance, evaluation, callbackFunction, predicateFunction);
+                    break;
+                default:
+                    throw new InvalidOperationException("The expression has more than the maximum number of parameters.");
+            }
+
+            mocksane.InitializeHook();
+
+            return mocksane;
+        }
+
+        public static BaseMocksane<TInstance, TResult> Initialize<TInstance, TResult>(
+            TInstance instance,
+            Expression<Func<TInstance, TResult>> expression,
+            Func<MocksaneParameters, TResult> returnsFunction = null,
+            Func<MocksaneParameters, bool> predicateFunction = null)
+            where TInstance : class
+        {
+            var evaluation = MocksaneExpression.Evaluate(expression);
+
+            BaseMocksane<TInstance, TResult> mocksane;
+
+            Type unboundedType;
+            Type boundedType;
+            ConstructorInfo constructorInfo;
+
+            switch (evaluation.ParameterCount)
+            {
+                case 0:
+                    mocksane = new Mocksane<TInstance, TResult>(instance, evaluation, returnsFunction, predicateFunction);
+                    break;
+<#
+    for (var parameterCount = 1; parameterCount <= 14; parameterCount++)
+    {
+        var commasString = new StringBuilder();
+        var evaluationString = new StringBuilder();
+
+        for (var commaNumber = 1; commaNumber <= parameterCount + 1; commaNumber++)
+        {
+            commasString.Append(",");
+        }
+
+        for (var evaluationParamIndex = 0; evaluationParamIndex < parameterCount; evaluationParamIndex++)
+        {
+            if (evaluationParamIndex > 0)
+            {
+                evaluationString.Append(", ");
+            }
+
+            evaluationString.Append($"evaluation.ParameterTypes[{evaluationParamIndex}]");
+        }
+#>
+case <#= parameterCount #>:
+    unboundedType = typeof(Mocksane<<#= commasString.ToString() #>>);
+    boundedType = unboundedType.MakeGenericType(typeof(TInstance), <#= evaluationString.ToString() #>, typeof(TResult));
+    constructorInfo = boundedType.GetConstructor(
+        BindingFlags.Instance | BindingFlags.NonPublic,
+        null,
+        new[]
+        {
+            typeof(TInstance),
+            typeof(MocksaneExpression),
+            typeof(Func<MocksaneParameters, TResult>),
+            typeof(Func<MocksaneParameters, bool>),
+        },
+        null);
+
+    if (constructorInfo == null)
+    {
+        throw new NotSupportedException("Something went wrong. This should never happen, please file a bug report!");
+    }
+
+    mocksane = (BaseMocksane<TInstance, TResult>)constructorInfo.Invoke(new object[] { instance, evaluation, returnsFunction, predicateFunction });
+    break;
+<#
+    }
+#>
+                default:
+                    throw new InvalidOperationException("The expression has more than the maximum number of parameters.");
+            }
+
+            mocksane.InitializeHook();
+
+            return mocksane;
+        }
+    }
+}

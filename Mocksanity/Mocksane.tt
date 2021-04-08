@@ -1,0 +1,131 @@
+<#@ import namespace="System.Text" #>
+using System;
+using MonoMod.RuntimeDetour;
+
+namespace RealGoodApps.Mocksanity
+{
+    public sealed class Mocksane<TInstance, TResult> : BaseMocksane<TInstance, TResult>
+        where TInstance : class
+    {
+        private Hook _hook;
+
+        internal Mocksane(
+            TInstance instance,
+            MocksaneExpression mocksaneExpression,
+            Func<MocksaneParameters, TResult> returnsFunction,
+            Func<MocksaneParameters, bool> predicateFunction)
+            : base(instance, mocksaneExpression, returnsFunction, predicateFunction)
+        {
+        }
+
+        internal override void InitializeHook()
+        {
+            _hook = new Hook(
+                MocksaneExpression.MethodInfo,
+                new Func<Func<TInstance, TResult>, TInstance, TResult>(HookCallback));
+        }
+
+        internal override void DestroyHook()
+        {
+            _hook?.Dispose();
+        }
+
+        public TResult HookCallback(
+            Func<TInstance, TResult> originalFunction,
+            TInstance instance)
+        {
+            var parameters = MocksaneParameters.Create();
+
+            if (Instance != instance
+                || (PredicateFunction != null && !PredicateFunction(parameters)))
+            {
+                return originalFunction(instance);
+            }
+
+            return ReturnsFunction != null
+                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                : default;
+        }
+    }
+
+<#
+    for (var parameterCount = 1; parameterCount <= 14; parameterCount++)
+    {
+        var genericTypesString = new StringBuilder();
+        var parameterListString = new StringBuilder();
+        var parameterNamesListString = new StringBuilder();
+        var parameterPredicatesString = new StringBuilder();
+
+        for (var parameterNumber = 1; parameterNumber <= parameterCount; parameterNumber++)
+        {
+            if (parameterNumber > 1)
+            {
+                genericTypesString.Append(", ");
+                parameterListString.Append(",\n");
+                parameterNamesListString.Append(", ");
+                parameterPredicatesString.Append("\n|| ");
+            }
+
+            genericTypesString.Append($"TParam{parameterNumber}");
+            parameterListString.Append($"TParam{parameterNumber} param{parameterNumber}");
+            parameterNamesListString.Append($"param{parameterNumber}");
+            parameterPredicatesString.Append($"!MocksaneExpression.ParameterPredicates[{parameterNumber - 1}].Invoke(param{parameterNumber})");
+        }
+#>
+    public sealed class Mocksane<TInstance, <#= genericTypesString.ToString() #>, TResult> : BaseMocksane<TInstance, TResult>
+        where TInstance : class
+    {
+        private Hook _hook;
+
+        internal Mocksane(
+            TInstance instance,
+            MocksaneExpression mocksaneExpression,
+            Func<MocksaneParameters, TResult> returnsFunction,
+            Func<MocksaneParameters, bool> predicateFunction)
+            : base(instance, mocksaneExpression, returnsFunction, predicateFunction)
+        {
+        }
+
+        internal override void InitializeHook()
+        {
+            _hook = new Hook(
+                MocksaneExpression.MethodInfo,
+                new Func<Func<TInstance, <#= genericTypesString.ToString() #>, TResult>, TInstance, <#= genericTypesString.ToString() #>, TResult>(HookCallback));
+        }
+
+        internal override void DestroyHook()
+        {
+            _hook?.Dispose();
+        }
+
+        public TResult HookCallback(
+            Func<TInstance, <#= genericTypesString.ToString() #>, TResult> originalFunction,
+            TInstance instance,
+            <#= parameterListString.ToString() #>)
+        {
+            var parameters = MocksaneParameters.Create(<#= parameterNamesListString.ToString() #>);
+
+            if (Instance != instance)
+            {
+                return originalFunction(instance, <#= parameterNamesListString.ToString() #>);
+            }
+
+            if (<#= parameterPredicatesString.ToString() #>)
+            {
+                return originalFunction(instance, <#= parameterNamesListString.ToString() #>);
+            }
+
+            if (PredicateFunction != null && !PredicateFunction(parameters))
+            {
+                return originalFunction(instance, <#= parameterNamesListString.ToString() #>);
+            }
+
+            return ReturnsFunction != null
+                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                : default;
+        }
+    }
+<#
+    }
+#>
+}

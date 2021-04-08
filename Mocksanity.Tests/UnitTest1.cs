@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Moq;
 using Xunit;
 
@@ -30,7 +31,12 @@ namespace RealGoodApps.Mocksanity.Tests
 
             Console.WriteLine("Making a thing Bar.");
 
-            return baseResult + 5;
+            return baseResult + this.NonvirtualMakeThing(x, x - 10, x - 20) + 5;
+        }
+
+        public int NonvirtualMakeThing(int x, int y, int z)
+        {
+            return x + y + z;
         }
     }
 
@@ -45,19 +51,14 @@ namespace RealGoodApps.Mocksanity.Tests
         {
             var sut = new Bar();
 
-            var q = new Mock<IDisposable>();
-
             using var mocksane = MocksaneInitializer.Initialize(
                 sut,
-                b => b.MakeThing(5));
+                b => b.NonvirtualMakeThing(50, 40, 30),
+                p => 20);
 
-            using var mocksane2 = MocksaneInitializer.Initialize<Foo, int>(
-                sut,
-                b => b.MakeThing(5));
+            var r = sut.MakeThing(50);
 
-            var r = sut.MakeThing(8);
-
-            Assert.Equal(13, r); // r is actually 18 for some reason
+            Assert.Equal(75, r);
         }
     }
 }
