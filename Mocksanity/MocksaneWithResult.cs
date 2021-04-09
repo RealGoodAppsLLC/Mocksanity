@@ -3,12 +3,12 @@ using MonoMod.RuntimeDetour;
 
 namespace RealGoodApps.Mocksanity
 {
-    public sealed class Mocksane<TInstance, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -41,18 +41,20 @@ namespace RealGoodApps.Mocksanity
                 return originalFunction(instance);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
 
-    public sealed class Mocksane<TInstance, TParam1, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -95,17 +97,19 @@ namespace RealGoodApps.Mocksanity
                 return originalFunction(instance, param1);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -150,17 +154,19 @@ TParam2 param2)
                 return originalFunction(instance, param1, param2);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -207,17 +213,19 @@ TParam3 param3)
                 return originalFunction(instance, param1, param2, param3);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -266,17 +274,19 @@ TParam4 param4)
                 return originalFunction(instance, param1, param2, param3, param4);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -327,17 +337,19 @@ TParam5 param5)
                 return originalFunction(instance, param1, param2, param3, param4, param5);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -390,17 +402,19 @@ TParam6 param6)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -455,17 +469,19 @@ TParam7 param7)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -522,17 +538,19 @@ TParam8 param8)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -591,17 +609,19 @@ TParam9 param9)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -662,17 +682,19 @@ TParam10 param10)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -735,17 +757,19 @@ TParam11 param11)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -810,17 +834,19 @@ TParam12 param12)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, param12);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -887,17 +913,19 @@ TParam13 param13)
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, param12, param13);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
         }
     }
-    public sealed class Mocksane<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13, TParam14, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13, TParam14, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -965,6 +993,8 @@ TParam14 param14)
             {
                 return originalFunction(instance, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, param12, param13, param14);
             }
+
+            CallCount++;
 
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))

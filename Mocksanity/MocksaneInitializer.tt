@@ -18,23 +18,62 @@ namespace RealGoodApps.Mocksanity
         {
             var evaluation = MocksaneExpression.Evaluate(expression);
 
-            BaseMocksaneVoid<TInstance> mocksane;
+            Type unboundedType;
+            Type boundedType;
 
             switch (evaluation.ParameterCount)
             {
-                case 0:
-                    mocksane = new MocksaneVoid<TInstance>(instance, evaluation, callbackFunction, predicateFunction);
+<#
+    for (var parameterCount = 0; parameterCount <= 14; parameterCount++)
+    {
+        var commasString = new StringBuilder();
+        var evaluationString = new StringBuilder();
+
+        for (var commaNumber = 1; commaNumber <= parameterCount; commaNumber++)
+        {
+            commasString.Append(",");
+        }
+
+        for (var evaluationParamIndex = 0; evaluationParamIndex < parameterCount; evaluationParamIndex++)
+        {
+            evaluationString.Append($", evaluation.ParameterTypes[{evaluationParamIndex}]");
+        }
+#>
+                case <#= parameterCount #>:
+                    unboundedType = typeof(MocksaneVoid<<#= commasString.ToString() #>>);
+                    boundedType = unboundedType.MakeGenericType(typeof(TInstance)<#= evaluationString.ToString() #>);
                     break;
+<#
+    }
+#>
                 default:
                     throw new InvalidOperationException("The expression has more than the maximum number of parameters.");
             }
 
+            var constructorInfo = boundedType.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new[]
+                {
+                    typeof(TInstance),
+                    typeof(MocksaneExpression),
+                    typeof(Action<MocksaneParameters>),
+                    typeof(Func<MocksaneParameters, bool>),
+                },
+                null);
+
+            if (constructorInfo == null)
+            {
+                throw new NotSupportedException("Something went wrong. This should never happen, please file a bug report!");
+            }
+
+            var mocksane = (BaseMocksaneVoid<TInstance>)constructorInfo.Invoke(new object[] { instance, evaluation, callbackFunction, predicateFunction });
             mocksane.InitializeHook();
 
             return mocksane;
         }
 
-        public static BaseMocksane<TInstance, TResult> Initialize<TInstance, TResult>(
+        public static BaseMocksaneWithResult<TInstance, TResult> Initialize<TInstance, TResult>(
             TInstance instance,
             Expression<Func<TInstance, TResult>> expression,
             Func<MocksaneParameters, TResult> returnsFunction = null,
@@ -65,7 +104,7 @@ namespace RealGoodApps.Mocksanity
         }
 #>
                 case <#= parameterCount #>:
-                    unboundedType = typeof(Mocksane<<#= commasString.ToString() #>>);
+                    unboundedType = typeof(MocksaneWithResult<<#= commasString.ToString() #>>);
                     boundedType = unboundedType.MakeGenericType(typeof(TInstance), <#= evaluationString.ToString() #>typeof(TResult));
                     break;
 <#
@@ -92,7 +131,7 @@ namespace RealGoodApps.Mocksanity
                 throw new NotSupportedException("Something went wrong. This should never happen, please file a bug report!");
             }
 
-            var mocksane = (BaseMocksane<TInstance, TResult>)constructorInfo.Invoke(new object[] { instance, evaluation, returnsFunction, predicateFunction });
+            var mocksane = (BaseMocksaneWithResult<TInstance, TResult>)constructorInfo.Invoke(new object[] { instance, evaluation, returnsFunction, predicateFunction });
             mocksane.InitializeHook();
 
             return mocksane;

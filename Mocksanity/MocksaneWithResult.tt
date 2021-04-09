@@ -4,12 +4,12 @@ using MonoMod.RuntimeDetour;
 
 namespace RealGoodApps.Mocksanity
 {
-    public sealed class Mocksane<TInstance, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -42,6 +42,8 @@ namespace RealGoodApps.Mocksanity
                 return originalFunction(instance);
             }
 
+            CallCount++;
+
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))
                 : default;
@@ -72,12 +74,12 @@ namespace RealGoodApps.Mocksanity
             parameterPredicatesString.Append($"!MocksaneExpression.ParameterPredicates[{parameterNumber - 1}].Invoke(param{parameterNumber})");
         }
 #>
-    public sealed class Mocksane<TInstance, <#= genericTypesString.ToString() #>, TResult> : BaseMocksane<TInstance, TResult>
+    public sealed class MocksaneWithResult<TInstance, <#= genericTypesString.ToString() #>, TResult> : BaseMocksaneWithResult<TInstance, TResult>
         where TInstance : class
     {
         private Hook _hook;
 
-        internal Mocksane(
+        internal MocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
             Func<MocksaneParameters, TResult> returnsFunction,
@@ -119,6 +121,8 @@ namespace RealGoodApps.Mocksanity
             {
                 return originalFunction(instance, <#= parameterNamesListString.ToString() #>);
             }
+
+            CallCount++;
 
             return ReturnsFunction != null
                 ? ReturnsFunction(MocksaneParameters.Create(parameters))

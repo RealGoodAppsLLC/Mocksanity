@@ -2,19 +2,19 @@ using System;
 
 namespace RealGoodApps.Mocksanity
 {
-    public abstract class BaseMocksaneVoid<TInstance> : BaseMocksane<TInstance>
+    public abstract class BaseMocksaneWithResult<TInstance, TResult> : BaseMocksane<TInstance>
         where TInstance : class
     {
-        internal readonly Action<MocksaneParameters> CallbackFunction;
+        internal readonly Func<MocksaneParameters, TResult> ReturnsFunction;
 
-        internal BaseMocksaneVoid(
+        internal BaseMocksaneWithResult(
             TInstance instance,
             MocksaneExpression mocksaneExpression,
-            Action<MocksaneParameters> callbackFunction,
+            Func<MocksaneParameters, TResult> returnsFunction,
             Func<MocksaneParameters, bool> predicateFunction)
             : base(instance, mocksaneExpression, predicateFunction)
         {
-            CallbackFunction = callbackFunction;
+            ReturnsFunction = returnsFunction;
         }
     }
 }
