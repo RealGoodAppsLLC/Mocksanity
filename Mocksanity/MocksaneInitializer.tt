@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 using BindingFlags = System.Reflection.BindingFlags;
 
 namespace RealGoodApps.Mocksanity
@@ -44,19 +43,13 @@ namespace RealGoodApps.Mocksanity
         {
             var evaluation = MocksaneExpression.Evaluate(expression);
 
-            BaseMocksane<TInstance, TResult> mocksane;
-
             Type unboundedType;
             Type boundedType;
-            ConstructorInfo constructorInfo;
 
             switch (evaluation.ParameterCount)
             {
-                case 0:
-                    mocksane = new Mocksane<TInstance, TResult>(instance, evaluation, returnsFunction, predicateFunction);
-                    break;
 <#
-    for (var parameterCount = 1; parameterCount <= 14; parameterCount++)
+    for (var parameterCount = 0; parameterCount <= 14; parameterCount++)
     {
         var commasString = new StringBuilder();
         var evaluationString = new StringBuilder();
@@ -68,36 +61,13 @@ namespace RealGoodApps.Mocksanity
 
         for (var evaluationParamIndex = 0; evaluationParamIndex < parameterCount; evaluationParamIndex++)
         {
-            if (evaluationParamIndex > 0)
-            {
-                evaluationString.Append(", ");
-            }
-
-            evaluationString.Append($"evaluation.ParameterTypes[{evaluationParamIndex}]");
+            evaluationString.Append($"evaluation.ParameterTypes[{evaluationParamIndex}], ");
         }
 #>
-case <#= parameterCount #>:
-    unboundedType = typeof(Mocksane<<#= commasString.ToString() #>>);
-    boundedType = unboundedType.MakeGenericType(typeof(TInstance), <#= evaluationString.ToString() #>, typeof(TResult));
-    constructorInfo = boundedType.GetConstructor(
-        BindingFlags.Instance | BindingFlags.NonPublic,
-        null,
-        new[]
-        {
-            typeof(TInstance),
-            typeof(MocksaneExpression),
-            typeof(Func<MocksaneParameters, TResult>),
-            typeof(Func<MocksaneParameters, bool>),
-        },
-        null);
-
-    if (constructorInfo == null)
-    {
-        throw new NotSupportedException("Something went wrong. This should never happen, please file a bug report!");
-    }
-
-    mocksane = (BaseMocksane<TInstance, TResult>)constructorInfo.Invoke(new object[] { instance, evaluation, returnsFunction, predicateFunction });
-    break;
+                case <#= parameterCount #>:
+                    unboundedType = typeof(Mocksane<<#= commasString.ToString() #>>);
+                    boundedType = unboundedType.MakeGenericType(typeof(TInstance), <#= evaluationString.ToString() #>typeof(TResult));
+                    break;
 <#
     }
 #>
@@ -105,6 +75,24 @@ case <#= parameterCount #>:
                     throw new InvalidOperationException("The expression has more than the maximum number of parameters.");
             }
 
+            var constructorInfo = boundedType.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new[]
+                {
+                    typeof(TInstance),
+                    typeof(MocksaneExpression),
+                    typeof(Func<MocksaneParameters, TResult>),
+                    typeof(Func<MocksaneParameters, bool>),
+                },
+                null);
+
+            if (constructorInfo == null)
+            {
+                throw new NotSupportedException("Something went wrong. This should never happen, please file a bug report!");
+            }
+
+            var mocksane = (BaseMocksane<TInstance, TResult>)constructorInfo.Invoke(new object[] { instance, evaluation, returnsFunction, predicateFunction });
             mocksane.InitializeHook();
 
             return mocksane;
