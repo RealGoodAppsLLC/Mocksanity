@@ -26,13 +26,28 @@ namespace RealGoodApps.Mocksanity
 
             foreach (var argument in methodCallExpression.Arguments)
             {
-                if (!(argument is ConstantExpression constantExpression))
-                {
-                    throw new NotSupportedException("Only constant expressions are support for smart predicates.");
-                }
+                ParameterTypes.Add(argument.Type);
 
-                ParameterTypes.Add(constantExpression.Type);
-                ParameterPredicates.Add(parameter => parameter == constantExpression.Value || parameter.Equals(constantExpression.Value));
+                switch (argument)
+                {
+                    case MemberExpression memberExpression:
+                        ParameterPredicates.Add(parameter =>
+                        {
+                            var boundedType = typeof(Func<>).MakeGenericType(memberExpression.Type);
+                            var compiled = Expression.Lambda(boundedType, memberExpression).Compile();
+                            var returnValue = compiled.DynamicInvoke();
+                            return parameter == returnValue || parameter.Equals(returnValue);
+                        });
+
+                        break;
+                    case ConstantExpression constantExpression:
+                        ParameterPredicates.Add(parameter => parameter == constantExpression.Value || parameter.Equals(constantExpression.Value));
+                        break;
+
+                    default:
+                        throw new NotSupportedException(
+                            "Only constant expressions and member expressions are supported for smart predicates.");
+                }
             }
         }
 
