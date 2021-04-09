@@ -1,0 +1,103 @@
+<#@ import namespace="System.Text" #>
+using System;
+using MonoMod.RuntimeDetour;
+
+namespace RealGoodApps.Mocksanity
+{
+<#
+    for (var parameterCount = 0; parameterCount <= 14; parameterCount++)
+    {
+        var genericTypesString = new StringBuilder();
+        var parameterListString = new StringBuilder();
+        var parameterNamesListString = new StringBuilder();
+        var parameterPredicatesString = new StringBuilder();
+        var commaPriorToParameterNamesListString = new StringBuilder();
+
+        if (parameterCount > 0)
+        {
+            parameterListString.Append(",\n");
+            commaPriorToParameterNamesListString.Append(", ");
+        }
+
+        for (var parameterNumber = 1; parameterNumber <= parameterCount; parameterNumber++)
+        {
+            if (parameterNumber > 1)
+            {
+                parameterListString.Append(",\n");
+                parameterNamesListString.Append(", ");
+                parameterPredicatesString.Append("\n                || ");
+            }
+
+            genericTypesString.Append($", TParam{parameterNumber}");
+            parameterListString.Append($"            TParam{parameterNumber} param{parameterNumber}");
+            parameterNamesListString.Append($"param{parameterNumber}");
+            parameterPredicatesString.Append(
+                $"!MocksaneExpression.ParameterPredicates[{parameterNumber - 1}].Invoke(param{parameterNumber})");
+        }
+#>
+    public sealed class MocksaneVoid<TInstance<#= genericTypesString.ToString() #>> : BaseMocksaneVoid<TInstance>
+        where TInstance : class
+    {
+        private Hook _hook;
+
+        internal MocksaneVoid(
+            TInstance instance,
+            MocksaneExpression mocksaneExpression,
+            Action<MocksaneParameters> callbackFunction,
+            Func<MocksaneParameters, bool> predicateFunction)
+            : base(instance, mocksaneExpression, callbackFunction, predicateFunction)
+        {
+        }
+
+        internal override void InitializeHook()
+        {
+            _hook = new Hook(
+                MocksaneExpression.MethodInfo,
+                new Action<Action<TInstance<#= genericTypesString.ToString() #>>, TInstance<#= genericTypesString.ToString() #>>(HookCallback));
+        }
+
+        internal override void DestroyHook()
+        {
+            _hook?.Dispose();
+        }
+
+        public void HookCallback(
+            Action<TInstance<#= genericTypesString.ToString() #>> originalFunction,
+            TInstance instance<#= parameterListString.ToString() #>)
+        {
+            var parameters = MocksaneParameters.Create(<#= parameterNamesListString.ToString() #>);
+
+            if (Instance != instance)
+            {
+                originalFunction(instance<#=
+                commaPriorToParameterNamesListString.ToString() #><#= parameterNamesListString.ToString() #>);
+                return;
+            }
+
+<#
+        if (parameterCount > 0)
+        {
+#>
+            if (<#= parameterPredicatesString.ToString() #>)
+            {
+                originalFunction(instance<#=
+                commaPriorToParameterNamesListString.ToString() #><#= parameterNamesListString.ToString() #>);
+                return;
+            }
+<#
+        }
+#>
+            if (PredicateFunction != null && !PredicateFunction(parameters))
+            {
+                originalFunction(instance<#= commaPriorToParameterNamesListString.ToString() #><#= parameterNamesListString.ToString() #>);
+                return;
+            }
+
+            CallCount++;
+            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+        }
+    }
+<#
+    }
+#>
+}
