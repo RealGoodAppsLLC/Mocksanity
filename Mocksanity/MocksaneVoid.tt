@@ -94,7 +94,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
 <#

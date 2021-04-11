@@ -48,7 +48,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1> : BaseMocksaneVoid<TInstance>
@@ -102,7 +102,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2> : BaseMocksaneVoid<TInstance>
@@ -158,7 +158,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3> : BaseMocksaneVoid<TInstance>
@@ -216,7 +216,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4> : BaseMocksaneVoid<TInstance>
@@ -276,7 +276,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5> : BaseMocksaneVoid<TInstance>
@@ -338,7 +338,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> : BaseMocksaneVoid<TInstance>
@@ -402,7 +402,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> : BaseMocksaneVoid<TInstance>
@@ -468,7 +468,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> : BaseMocksaneVoid<TInstance>
@@ -536,7 +536,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9> : BaseMocksaneVoid<TInstance>
@@ -606,7 +606,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10> : BaseMocksaneVoid<TInstance>
@@ -678,7 +678,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11> : BaseMocksaneVoid<TInstance>
@@ -752,7 +752,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12> : BaseMocksaneVoid<TInstance>
@@ -828,7 +828,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13> : BaseMocksaneVoid<TInstance>
@@ -906,7 +906,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
     public sealed class MocksaneVoid<TInstance, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TParam9, TParam10, TParam11, TParam12, TParam13, TParam14> : BaseMocksaneVoid<TInstance>
@@ -986,7 +986,7 @@ namespace RealGoodApps.Mocksanity
             }
 
             CallCount++;
-            CallbackFunction?.Invoke(MocksaneParameters.Create(parameters));
+            CallbackFunction?.Invoke(parameters);
         }
     }
 }

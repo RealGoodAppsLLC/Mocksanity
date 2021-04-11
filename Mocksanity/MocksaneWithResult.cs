@@ -47,7 +47,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -100,7 +100,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -155,7 +155,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -212,7 +212,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -271,7 +271,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -332,7 +332,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -395,7 +395,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -460,7 +460,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -527,7 +527,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -596,7 +596,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -667,7 +667,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -740,7 +740,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -815,7 +815,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -892,7 +892,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }
@@ -971,7 +971,7 @@ namespace RealGoodApps.Mocksanity
             CallCount++;
 
             return ReturnsFunction != null
-                ? ReturnsFunction(MocksaneParameters.Create(parameters))
+                ? ReturnsFunction(parameters)
                 : default;
         }
     }

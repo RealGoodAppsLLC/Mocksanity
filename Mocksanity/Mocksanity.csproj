@@ -3,8 +3,23 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>RealGoodApps.Mocksanity</RootNamespace>
+        <Version>$(MocksanityVersion)</Version>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageId>Mocksanity</PackageId>
+        <PackageVersion>$(MocksanityVersion)</PackageVersion>
+        <Authors>RealGoodApps, LLC</Authors>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/RealGoodAppsLLC/Mocksanity/main/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/RealGoodAppsLLC/Mocksanity</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/RealGoodAppsLLC/Mocksanity</RepositoryUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>Mocksanity</Description>
+        <PackageReleaseNotes>See the following: https://raw.githubusercontent.com/RealGoodAppsLLC/Mocksanity/main/CHANGELOG</PackageReleaseNotes>
+        <Copyright>Copyright 2021 RealGoodApps, LLC</Copyright>
+        <PackageTags>TDD, mock sealed classes, mocking, mock non-virtual methods</PackageTags>
+    </PropertyGroup>
+    
     <ItemGroup>
         <PackageReference Include="MonoMod.RuntimeDetour" Version="21.4.2.3" />
     </ItemGroup>
